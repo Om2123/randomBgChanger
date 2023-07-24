@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  TouchableOpacity,
   StyleSheet,
   Text,
   TextInput,
@@ -19,36 +20,58 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-
-
 function App(): JSX.Element {
-  
- 
+  const backColor = '#000000';
+
+  const generateRandomColor = () => {
+    // Generate three random numbers between 0 and 255.
+    const random = Math.random();
+  const r = Math.floor(random * 255);
+  const g = Math.floor(random * 255);
+  const b = 200;
+
+  // Convert the numbers to hexadecimal format.
+  const hex = `#${r.toString(16)}${g.toString(16)}${b.toString(16)}`;
+
+  return hex;
+  };
+
+  const [color, setColor] = useState('red');
+
+  const handleClick = () => {
+    setColor(generateRandomColor());
+  };
+
   return (
-    <ScrollView>
-    </ScrollView>
+    <SafeAreaView style={[styles.container,{backgroundColor:color}]}>
+      <StatusBar hidden={false} backgroundColor={color} />
+      <View style={[styles.btnBack, {backgroundColor: color}]}>
+        <TouchableOpacity onPress={handleClick} style={styles.btnBack}>
+          <Text style={styles.buttonTxt}>Press me !!</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'flex-start',
-    marginTop: 50,
-    marginLeft: 50,
-    elevation: 9,
+  btnBack: {
+    padding: 30,
 
-    justifyContent: 'center',
-    backgroundColor: 'red',
+    color: 'white',
   },
-  text: {
-    fontSize: 100,
-    color: 'red',
+  buttonTxt: {
+    color: 'black',
+    backgroundColor: 'white',
+    padding: 23,
+    borderRadius: 17,
+    fontSize: 28,
     fontWeight: 'bold',
   },
-  input: {
-    width: 100,
-    height: 40,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
